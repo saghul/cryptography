@@ -29,6 +29,14 @@ def _available_backends():
             )
         ]
 
+        if not _available_backends_list:
+            try:
+                from cryptography.hazmat.backends.openssl.backend import backend
+            except ImportError:
+                pass
+            else:
+                _available_backends_list.append(backend)
+
     return _available_backends_list
 
 _default_backend = None
